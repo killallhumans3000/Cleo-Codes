@@ -1,0 +1,373 @@
+/**
+ * Beispiel-Komponenten - Verwendung von Design Tokens
+ *
+ * Diese Datei zeigt, wie CSS-Variablen aus variables.css
+ * in SCSS Komponenten verwendet werden.
+ *
+ * WICHTIG: Immer Tokens verwenden, nie Hard-coded Werte!
+ */
+
+/* =============================================
+   BUTTONS - Beispiel
+   ============================================= */
+
+.brix-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--button-height-md);
+  padding: 0 var(--space-md);
+  border: var(--border-width) solid transparent;
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+
+  &:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  /* Button Varianten */
+  &--primary {
+    background-color: var(--color-primary);
+    color: var(--color-text-white);
+
+    &:hover {
+      opacity: 0.9;
+      box-shadow: var(--shadow-md);
+    }
+
+    &:active {
+      opacity: 0.8;
+    }
+  }
+
+  &--secondary {
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+
+    &:hover {
+      opacity: 0.9;
+      box-shadow: var(--shadow-md);
+    }
+  }
+
+  &--outline {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background-color: transparent;
+
+    &:hover {
+      background-color: var(--color-bg-light);
+    }
+  }
+
+  /* Button Größen */
+  &--sm {
+    height: var(--button-height-sm);
+    font-size: var(--font-size-small);
+    padding: 0 var(--space-sm);
+  }
+
+  &--lg {
+    height: var(--button-height-lg);
+    font-size: var(--font-size-body-large);
+    padding: 0 var(--space-lg);
+  }
+
+  &:disabled {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+  }
+}
+
+/* =============================================
+   CARDS - Beispiel
+   ============================================= */
+
+.brix-card {
+  background-color: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  &__header {
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: var(--border-width) solid var(--color-border);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+  }
+
+  &__content {
+    margin-bottom: var(--space-md);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text);
+  }
+
+  &__footer {
+    display: flex;
+    gap: var(--gap-sm);
+    padding-top: var(--space-md);
+    border-top: var(--border-width) solid var(--color-border-light);
+  }
+
+  /* Varianten */
+  &--featured {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  &--highlight {
+    background-color: var(--color-bg-light);
+    border-color: var(--color-secondary);
+  }
+}
+
+/* =============================================
+   FORMS - Beispiel
+   ============================================= */
+
+.brix-form-group {
+  margin-bottom: var(--space-lg);
+}
+
+.brix-label {
+  display: block;
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.brix-input,
+.brix-textarea,
+.brix-select {
+  width: 100%;
+  padding: var(--input-padding);
+  height: var(--input-height);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  transition: var(--transition);
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 107, 179, 0.1);
+  }
+
+  &:disabled {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    background-color: var(--color-bg-light);
+  }
+
+  &::placeholder {
+    color: var(--color-text-lighter);
+  }
+}
+
+.brix-textarea {
+  min-height: 120px;
+  padding: var(--space-md);
+  resize: vertical;
+}
+
+/* Form Validation */
+.brix-input--error {
+  border-color: var(--color-error);
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+  }
+}
+
+.brix-input--success {
+  border-color: var(--color-success);
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+  }
+}
+
+.brix-form-help {
+  font-size: var(--font-size-tiny);
+  color: var(--color-text-light);
+  margin-top: var(--space-xs);
+}
+
+.brix-form-error {
+  font-size: var(--font-size-tiny);
+  color: var(--color-error);
+  margin-top: var(--space-xs);
+}
+
+/* =============================================
+   TYPOGRAFIE - Beispiel
+   ============================================= */
+
+h1,
+.brix-h1 {
+  margin: 0 0 var(--space-xl) 0;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text);
+}
+
+h2,
+.brix-h2 {
+  margin: 0 0 var(--space-lg) 0;
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text);
+}
+
+h3,
+.brix-h3 {
+  margin: 0 0 var(--space-md) 0;
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text);
+}
+
+p,
+.brix-body {
+  margin: 0 0 var(--space-md) 0;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* =============================================
+   ALERTS - Beispiel
+   ============================================= */
+
+.brix-alert {
+  padding: var(--space-md);
+  border-left: var(--border-width-thick) solid;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-normal);
+
+  &__title {
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-xs);
+  }
+
+  &--success {
+    background-color: rgba(39, 174, 96, 0.1);
+    border-color: var(--color-success);
+    color: var(--color-success);
+  }
+
+  &--warning {
+    background-color: rgba(243, 156, 18, 0.1);
+    border-color: var(--color-warning);
+    color: var(--color-warning);
+  }
+
+  &--error {
+    background-color: rgba(231, 76, 60, 0.1);
+    border-color: var(--color-error);
+    color: var(--color-error);
+  }
+
+  &--info {
+    background-color: rgba(52, 152, 219, 0.1);
+    border-color: var(--color-info);
+    color: var(--color-info);
+  }
+}
+
+/* =============================================
+   RESPONSIVE BEISPIEL
+   ============================================= */
+
+.brix-grid {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+  /* Mobile */
+  @media (max-width: 767px) {
+    gap: var(--gap-sm);
+    grid-template-columns: 1fr;
+  }
+
+  /* Tablet */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Desktop */
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap-lg);
+  }
+}
+
+/* =============================================
+   SPACING UTILITY - Beispiel
+   ============================================= */
+
+.brix-mt-sm { margin-top: var(--space-sm); }
+.brix-mt-md { margin-top: var(--space-md); }
+.brix-mt-lg { margin-top: var(--space-lg); }
+
+.brix-mb-sm { margin-bottom: var(--space-sm); }
+.brix-mb-md { margin-bottom: var(--space-md); }
+.brix-mb-lg { margin-bottom: var(--space-lg); }
+
+.brix-p-sm { padding: var(--space-sm); }
+.brix-p-md { padding: var(--space-md); }
+.brix-p-lg { padding: var(--space-lg); }
+
+/* =============================================
+   ACCESSIBILITY UTILITIES
+   ============================================= */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.brix-focus-visible:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+}

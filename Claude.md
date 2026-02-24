@@ -201,11 +201,121 @@ const initializeComponent = (elementSelector) => {
 
 ---
 
+## 🎨 Design Token System
+
+### Überblick
+
+Das Projekt nutzt ein **zentrales Design Token System**, das alle Design-Eigenschaften dokumentiert und als CSS-Variablen zur Verfügung stellt. Diese Tokens kommen entweder von **Figma Design** oder werden **manuell definiert**.
+
+**Workflow:**
+```
+Figma Design / Design Vorgaben
+         ↓
+DESIGN_TOKENS.md (Tabelle)
+         ↓
+variables.css (CSS Custom Properties)
+         ↓
+SCSS Komponenten (Verwendung)
+```
+
+### Dateien im Design Token System
+
+1. **`/docs/DESIGN_TOKENS.md`** - Dokumentation aller Tokens in Tabellen-Form
+   - Farben, Typografie, Abstände, Border, Schatten, etc.
+   - Markiert welche Tokens von Figma kommen
+   - Benutzung & Beschreibung
+
+2. **`/theme/brix-theme/assets/css/variables.css`** - CSS-Variablen
+   - Alle Design Tokens als CSS Custom Properties
+   - Mobile-First Responsive Anpassungen
+   - Ready to use in SCSS/CSS
+
+3. **`/theme/brix-theme/assets/css/example-components.scss`** - Best Practice Beispiele
+   - Zeigt wie Tokens in Komponenten verwendet werden
+   - Buttons, Cards, Forms, Typografie, etc.
+
+### Neuen Token Hinzufügen
+
+**Schritt 1:** Neuen Token in `DESIGN_TOKENS.md` dokumentieren
+
+```markdown
+| Token Name | Wert | Figma? | Beschreibung | Verwendung |
+|-----------|------|--------|------------|-----------|
+| `--my-new-token` | `value` | ✅ | Beschreibung | Wo wird es verwendet |
+```
+
+**Schritt 2:** Token in `variables.css` hinzufügen
+
+```css
+:root {
+  --my-new-token: value;
+}
+```
+
+**Schritt 3:** In SCSS/CSS verwenden
+
+```scss
+.component {
+  property: var(--my-new-token);
+}
+```
+
+**Schritt 4:** Committen
+
+```bash
+git add docs/DESIGN_TOKENS.md theme/brix-theme/assets/css/variables.css
+git commit -m "feat: Neuer Design Token - --my-new-token"
+```
+
+### Token Kategorien
+
+| Kategorie | Datei | Beispiele |
+|-----------|-------|----------|
+| **Farben** | variables.css | `--color-primary`, `--color-bg`, `--color-text` |
+| **Typografie** | variables.css | `--font-size-h1`, `--font-weight-bold`, `--line-height-normal` |
+| **Abstände** | variables.css | `--space-sm`, `--padding-md`, `--margin-lg` |
+| **Border** | variables.css | `--border-radius-md`, `--border-width` |
+| **Schatten** | variables.css | `--shadow-sm`, `--shadow-lg` |
+| **Animation** | variables.css | `--transition-normal`, `--ease-in-out` |
+| **Breakpoints** | variables.css | `--breakpoint-md`, `--breakpoint-lg` |
+
+### ✅ Best Practices
+
+**Sollte getan werden:**
+- ✅ Immer Tokens verwenden, niemals Hard-coded Werte
+- ✅ Token-Namen konsistent: `--category-property`
+- ✅ Neue Tokens erst in DESIGN_TOKENS.md dokumentieren
+- ✅ Farben mit ausreichend Kontrast (WCAG AA)
+- ✅ Mobile-First: Tokens anpassen über Media Queries
+
+**Nicht machen:**
+- ❌ Hard-coded Farben/Werte wie `color: #006bb3`
+- ❌ Inline-Styles
+- ❌ Tokens ohne Dokumentation hinzufügen
+- ❌ Werte willkürlich ändern
+
+### Beispiel: Button mit Tokens
+
+```scss
+.brix-btn {
+  height: var(--button-height-md);
+  padding: 0 var(--space-md);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  transition: var(--transition);
+}
+```
+
+---
+
 ## 🎨 Design Guidelines Integration
 
 ### Farben
-- Aus Design-Vorgaben des Teams in `config/colors.scss`
-- Konsistente Nutzung über alle Komponenten
+- Aus Design-Vorgaben des Teams in `variables.css`
+- Konsistente Nutzung über alle Komponenten via Tokens
 - Accessible Contrast Ratios (WCAG AA)
 
 ### Typografie
@@ -303,5 +413,30 @@ Claude sollte bei folgenden Aufgaben helfen:
 
 ---
 
+## 🔄 Synchronisation mit Figma
+
+### Workflow bei Design-Änderungen
+
+1. **In Figma ändern** - Design Team aktualisiert Design
+2. **Link dokumentieren** - In `DESIGN_TOKENS.md` unter "Verknüpfung mit Figma"
+3. **Tokens aktualisieren**
+   - In `DESIGN_TOKENS.md` neue Werte eintragen
+   - Mit ✅ markieren, dass diese von Figma kommen
+   - In `variables.css` Wert aktualisieren
+4. **Komponenten anpassen** - SCSS/CSS überprüfen und anpassen
+5. **Committen** - Mit Figma-Link oder Design-Version
+
+### Commit-Beispiel mit Figma
+
+```bash
+git commit -m "feat: Update Design Tokens von Figma
+- Farben: Primär-blau von #006bb3 zu #0077cc
+- Abstand: spacing-lg von 24px zu 28px
+Figma: https://figma.com/file/xxx"
+```
+
+---
+
 **Erstellt:** 2026-02-24
 **Version:** 1.0.0
+**Letztes Update:** 2026-02-24 - Design Token System hinzugefügt
