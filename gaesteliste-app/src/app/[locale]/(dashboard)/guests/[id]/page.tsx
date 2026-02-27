@@ -1,10 +1,10 @@
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { notFound, redirect } from "next/navigation";
-import { QRCodeSVG } from "qrcode.react";
 import { Link } from "@/i18n/navigation";
 import type { Guest } from "@/types";
 import GuestDetailActions from "@/components/features/guests/GuestDetailActions";
+import QRCodeDisplay from "@/components/features/guests/QRCodeDisplay";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://localhost:3000";
 
@@ -141,25 +141,3 @@ export default async function GuestDetailPage({
   );
 }
 
-// Client component for QR rendering
-import dynamic from "next/dynamic";
-
-const QRCodeDisplay = dynamic(
-  () =>
-    Promise.resolve(function QRCodeDisplay({
-      token,
-      appUrl,
-    }: {
-      token: string;
-      appUrl: string;
-    }) {
-      return (
-        <QRCodeSVG
-          value={`${appUrl}/verify/${token}`}
-          size={200}
-          level="M"
-        />
-      );
-    }),
-  { ssr: false }
-);
