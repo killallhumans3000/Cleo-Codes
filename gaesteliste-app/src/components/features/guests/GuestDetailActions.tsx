@@ -39,7 +39,8 @@ export default function GuestDetailActions({
 
   const handleSendInvite = async () => {
     if (!guest.email) return;
-    await sendGuestInvite(guest.id);
+    const safeLocale = locale === "en" ? "en" : "de";
+    await sendGuestInvite(guest.id, safeLocale);
     alert(t("inviteSent"));
   };
 

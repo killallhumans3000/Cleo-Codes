@@ -122,7 +122,10 @@ export default async function GuestDetailPage({
                 appUrl={APP_URL}
               />
             </div>
-            <p className="text-xs text-gray-400 font-mono">{guest.qr_token}</p>
+            {/* Token plain text only for admins — ordinary guests don't need it */}
+            {isAdmin && (
+              <p className="text-xs text-gray-400 font-mono select-all">{guest.qr_token}</p>
+            )}
           </div>
         </div>
 

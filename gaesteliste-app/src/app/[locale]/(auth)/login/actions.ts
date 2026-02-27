@@ -4,9 +4,19 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
+const ALLOWED_LOCALES = ["de", "en"] as const;
+type AllowedLocale = (typeof ALLOWED_LOCALES)[number];
+
+function safeLocale(raw: unknown): AllowedLocale {
+  if (typeof raw === "string" && (ALLOWED_LOCALES as readonly string[]).includes(raw)) {
+    return raw as AllowedLocale;
+  }
+  return "de";
+}
+
 export async function login(formData: FormData) {
   const supabase = await createClient();
-  const locale = (formData.get("locale") as string) || "de";
+  const locale = safeLocale(formData.get("locale"));
 
   const { error } = await supabase.auth.signInWithPassword({
     email: formData.get("email") as string,
@@ -23,14 +33,19 @@ export async function login(formData: FormData) {
 
 export async function signup(formData: FormData) {
   const supabase = await createClient();
-  const locale = (formData.get("locale") as string) || "de";
+  const locale = safeLocale(formData.get("locale"));
+
+  const fullName = formData.get("full_name");
+  if (typeof fullName !== "string" || fullName.trim().length === 0) {
+    redirect(`/${locale}/register?error=invalid_name`);
+  }
 
   const { error } = await supabase.auth.signUp({
     email: formData.get("email") as string,
     password: formData.get("password") as string,
     options: {
       data: {
-        full_name: formData.get("full_name") as string,
+        full_name: (fullName as string).trim(),
       },
     },
   });
@@ -45,7 +60,7 @@ export async function signup(formData: FormData) {
 
 export async function logout(formData: FormData) {
   const supabase = await createClient();
-  const locale = (formData.get("locale") as string) || "de";
+  const locale = safeLocale(formData.get("locale"));
 
   await supabase.auth.signOut();
   revalidatePath("/", "layout");
