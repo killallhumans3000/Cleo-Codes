@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { signToken, randomUUID } from "@/lib/token";
 
 const ALLOWED_STATUSES = ["pending", "checked_in", "checked_out"] as const;
 
@@ -63,18 +64,25 @@ async function getCurrentUserAndRole() {
 export async function addGuest(formData: FormData) {
   const { supabase, user } = await getCurrentUserAndRole();
 
-  const guestData = {
+  const visitDate = validateDate(formData.get("visit_date"));
+
+  // Generate the guest ID client-side so we can sign it into the QR token
+  // before the DB insert — avoids a round-trip for the update.
+  const guestId = randomUUID();
+  const qrToken = signToken(guestId, visitDate);
+
+  const { error } = await supabase.from("guests").insert({
+    id: guestId,
     name: validateName(formData.get("name")),
     email: validateEmail(formData.get("email")),
-    visit_date: validateDate(formData.get("visit_date")),
+    visit_date: visitDate,
     notes: validateNotes(formData.get("notes")),
     user_id: user.id,
-  };
-
-  const { error } = await supabase.from("guests").insert(guestData);
+    qr_token: qrToken,
+  });
   if (error) throw new Error(error.message);
 
-  revalidatePath("/[locale]/(dashboard)/guests", "page");
+  revalidatePath("/", "layout");
 }
 
 export async function deleteGuest(guestId: string) {
@@ -95,7 +103,7 @@ export async function deleteGuest(guestId: string) {
   const { error } = await supabase.from("guests").delete().eq("id", guestId);
   if (error) throw new Error(error.message);
 
-  revalidatePath("/[locale]/(dashboard)/guests", "page");
+  revalidatePath("/", "layout");
 }
 
 export async function updateGuestStatus(
@@ -107,8 +115,6 @@ export async function updateGuestStatus(
 
   const { supabase, user, isAdmin } = await getCurrentUserAndRole();
 
-  // Ownership check: regular users can only manage their own guests.
-  // Status changes (check-in/out) are admin-only by convention.
   const { data: guest } = await supabase
     .from("guests")
     .select("user_id")
@@ -124,6 +130,11 @@ export async function updateGuestStatus(
   const updateData: Record<string, string | null> = { status };
   if (status === "checked_in") updateData.check_in_time = new Date().toISOString();
   if (status === "checked_out") updateData.check_out_time = new Date().toISOString();
+  // Reset timestamps when going back to pending
+  if (status === "pending") {
+    updateData.check_in_time = null;
+    updateData.check_out_time = null;
+  }
 
   const { error } = await supabase
     .from("guests")
@@ -131,7 +142,7 @@ export async function updateGuestStatus(
     .eq("id", guestId);
   if (error) throw new Error(error.message);
 
-  revalidatePath("/[locale]/(dashboard)/guests", "page");
+  revalidatePath("/", "layout");
 }
 
 export async function sendGuestInvite(guestId: string, locale: "de" | "en" = "de") {
@@ -154,5 +165,5 @@ export async function sendGuestInvite(guestId: string, locale: "de" | "en" = "de
   const { sendGuestInviteEmail } = await import("@/lib/email");
   await sendGuestInviteEmail(guest.email, guest.name, guest.qr_token, locale);
 
-  revalidatePath("/[locale]/(dashboard)/guests", "page");
+  revalidatePath("/", "layout");
 }

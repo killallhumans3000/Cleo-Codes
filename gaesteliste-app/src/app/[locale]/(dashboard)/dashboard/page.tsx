@@ -52,14 +52,14 @@ export default async function DashboardPage({
     <div className="space-y-8">
       {/* Welcome */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 break-words">
           {t("welcome")}, {profile?.full_name ?? user?.email}! 👋
         </h1>
         <p className="text-gray-500 mt-1">{t("title")}</p>
       </div>
 
       {/* Stats grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <StatCard label={t("totalGuests")} value={stats.total} color="blue" />
         <StatCard label={t("todayGuests")} value={stats.today} color="purple" />
         <StatCard label={t("checkedInGuests")} value={stats.checkedIn} color="green" />

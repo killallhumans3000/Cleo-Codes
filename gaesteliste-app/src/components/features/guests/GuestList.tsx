@@ -57,7 +57,7 @@ export default function GuestList({
             key={guest.id}
             className="px-6 py-4 hover:bg-gray-50 transition-colors"
           >
-            <div className="md:grid md:grid-cols-5 md:gap-4 md:items-center space-y-2 md:space-y-0">
+            <div className="grid grid-cols-1 md:grid-cols-5 md:gap-4 md:items-center gap-y-2 md:gap-y-0">
               <div>
                 <p className="font-medium text-gray-900">{guest.name}</p>
                 {guest.email && (
@@ -85,10 +85,10 @@ export default function GuestList({
                 </div>
               )}
 
-              <div className="text-right">
+              <div className="md:text-right">
                 <Link
                   href={`/guests/${guest.id}`}
-                  className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                  className="inline-flex items-center min-h-[44px] text-sm text-blue-600 hover:text-blue-800 font-medium"
                 >
                   Details →
                 </Link>

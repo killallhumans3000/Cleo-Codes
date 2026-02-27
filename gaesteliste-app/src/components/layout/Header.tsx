@@ -56,7 +56,7 @@ export default function Header({ userEmail, isAdmin }: HeaderProps) {
             {/* Language switcher */}
             <button
               onClick={() => router.replace(pathname, { locale: switchTo })}
-              className="text-sm text-gray-500 hover:text-gray-700 px-2 py-1 rounded hover:bg-gray-100"
+              className="text-sm text-gray-500 hover:text-gray-700 px-3 py-2 rounded hover:bg-gray-100 min-h-[44px] flex items-center"
               aria-label={t("Common.language")}
             >
               {currentLocale === "de" ? "🇬🇧 EN" : "🇩🇪 DE"}
@@ -71,7 +71,7 @@ export default function Header({ userEmail, isAdmin }: HeaderProps) {
                 </span>
                 <button
                   formAction={logout}
-                  className="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg transition-colors"
+                  className="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg transition-colors min-h-[44px] flex items-center"
                 >
                   {t("Common.logout")}
                 </button>

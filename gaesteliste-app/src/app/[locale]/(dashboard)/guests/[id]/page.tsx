@@ -81,7 +81,7 @@ export default async function GuestDetailPage({
           </span>
         </div>
 
-        <dl className="grid grid-cols-2 gap-4">
+        <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <dt className="text-sm font-medium text-gray-500">{t("visitDate")}</dt>
             <dd className="mt-1 text-gray-900">

@@ -6,6 +6,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
+import { verifyToken } from "@/lib/token";
 
 const LABELS = {
   de: {
@@ -35,6 +36,10 @@ export default async function VerifyPage({
   const locale: "de" | "en" = acceptLanguage.toLowerCase().startsWith("en") ? "en" : "de";
   const labels = LABELS[locale];
 
+  // Verify HMAC signature before any DB lookup — rejects forged tokens immediately
+  const verified = verifyToken(token);
+  if (!verified) notFound();
+
   const supabase = await createClient();
 
   // Only expose the minimum fields needed for doorman verification
@@ -61,7 +66,7 @@ export default async function VerifyPage({
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-lg p-8 max-w-sm w-full text-center space-y-4">
+      <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 max-w-sm w-full text-center space-y-4">
         <div className="text-5xl">{emoji}</div>
         <h1 className="text-2xl font-bold text-gray-900">{guest.name}</h1>
         <p className="text-sm text-gray-500">

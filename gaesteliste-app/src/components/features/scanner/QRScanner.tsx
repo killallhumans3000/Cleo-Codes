@@ -92,7 +92,7 @@ export default function QRScannerComponent() {
 
   return (
     <div className="space-y-4">
-      <div className="max-w-sm mx-auto">
+      <div className="max-w-sm sm:max-w-md mx-auto">
         {error && (
           <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
             {error}
