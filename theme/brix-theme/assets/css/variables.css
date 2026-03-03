@@ -56,17 +56,18 @@
   --font-family-secondary: 'Georgia', 'Times New Roman', serif;
   --font-family-mono: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 
-  /* Font-Größen */
-  --font-size-h1: 2.5rem;
-  --font-size-h2: 2rem;
-  --font-size-h3: 1.5rem;
-  --font-size-h4: 1.25rem;
-  --font-size-h5: 1.1rem;
-  --font-size-h6: 1rem;
-  --font-size-body: 1rem;
-  --font-size-body-large: 1.125rem;
-  --font-size-small: 0.875rem;
-  --font-size-tiny: 0.75rem;
+  /* Font-Größen - Fluid Typography (von Figma) */
+  /* Desktop: 14px-16px base, 13px small | Mobile: 14px base, 12px small */
+  --font-size-h1: clamp(2rem, 5vw, 3rem);
+  --font-size-h2: clamp(1.8em, 4vw, 2.5em);
+  --font-size-h3: clamp(1.3em, 3vw, 2.1em);
+  --font-size-h4: clamp(1em, 2.2vw, 1.7em);
+  --font-size-h5: clamp(0.85em, 1.8vw, 1.4em);
+  --font-size-h6: clamp(0.75em, 1.5vw, 1.2em);
+  --font-size-body: clamp(14px, 1.6vw, 16px);
+  --font-size-body-large: clamp(15px, 1.8vw, 18px);
+  --font-size-small: clamp(11px, 1.3vw, 13px);
+  --font-size-tiny: clamp(10px, 1.1vw, 12px);
 
   /* Font-Gewichte */
   --font-weight-light: 300;
@@ -89,16 +90,19 @@
   --letter-spacing-wider: 0.1em;
 
   /* =============================================
-     ABSTANDS-TOKENS (SPACING - 8px Grid)
+     ABSTANDS-TOKENS (SPACING - Fluid von Figma)
      ============================================= */
+  /* Breakpoints: Mobile 280-768px, Tablet 768-1024px, Desktop 1024-1920px */
 
-  --space-xs: 0.25rem;      /* 4px */
-  --space-sm: 0.5rem;       /* 8px */
-  --space-md: 1rem;         /* 16px */
-  --space-lg: 1.5rem;       /* 24px */
-  --space-xl: 2rem;         /* 32px */
-  --space-xxl: 3rem;        /* 48px */
-  --space-xxxl: 4rem;       /* 64px */
+  --space-xxs: clamp(6px, 1vw, 8px);          /* 8px desktop */
+  --space-xs: clamp(8px, 1.2vw, 10px);        /* 10px desktop */
+  --space-sm: clamp(12px, 2vw, 16px);         /* 16px desktop */
+  --space-md: clamp(16px, 2.4vw, 20px);       /* 20px desktop (Normal) */
+  --space-lg: clamp(22px, 3.2vw, 28px);       /* 28px desktop (MD) */
+  --space-xl: clamp(32px, 4.8vw, 40px);       /* 40px desktop (LG) */
+  --space-xxl: clamp(52px, 7.2vw, 64px);      /* 64px desktop (XL) */
+  --space-xxxl: clamp(104px, 14.8vw, 130px);  /* 130px desktop (2XL) */
+  --space-4xl: clamp(120px, 17vw, 150px);     /* 150px desktop (3XL) */
 
   /* Padding - Spezifische Werte */
   --padding-xs: var(--space-xs);
@@ -237,32 +241,20 @@
      ============================================= */
 }
 
-/* Tablet (768px+) */
-@media (min-width: 768px) {
-  :root {
-    --font-size-h1: 2.75rem;
-    --font-size-h2: 2.25rem;
-    --font-size-h3: 1.75rem;
-    --space-lg: 1.75rem;
-    --space-xl: 2.5rem;
-    --space-xxl: 3.5rem;
-  }
-}
-
-/* Desktop (1024px+) */
-@media (min-width: 1024px) {
-  :root {
-    --font-size-h1: 3rem;
-    --font-size-h2: 2.5rem;
-    --font-size-h3: 2rem;
-    --space-xl: 3rem;
-    --space-xxl: 4rem;
-  }
-}
-
-/* Large Desktop (1280px+) */
-@media (min-width: 1280px) {
-  :root {
-    --font-size-h1: 3.5rem;
-  }
-}
+/* =============================================
+   FLUID PROPERTIES NOTICE
+   ============================================= */
+/*
+ * Ab sofort nutzen wir moderne CSS clamp()-Funktionen
+ * für automatische Skalierung zwischen Breakpoints.
+ *
+ * Alte Media Queries sind nicht mehr nötig!
+ *
+ * Breakpoints für Berechnung:
+ * - Mobile: 280px (minimum)
+ * - Tablet: 768px
+ * - Desktop: 1024px-1920px (maximum)
+ *
+ * Die clamp(min, preferred, max) Funktionen skalieren
+ * automatisch zwischen diesen Viewports.
+ */

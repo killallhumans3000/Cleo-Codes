@@ -25,19 +25,24 @@ Alle Design-Eigenschaften werden hier zentral dokumentiert und in CSS-Variablen 
 
 ---
 
-## 🔤 Typografie-Tokens
+## 🔤 Typografie-Tokens - Fluid Typography
+
+**Neue Fluid Properties von Figma Design (2026-03-03)**
+- Mobile: 14px base, 12px small
+- Desktop: 16px base, 13px small
+- Headlines: 3em, 2.5em, 2.1em, 1.7em, 1.4em, 1.2em
 
 | Token Name | Wert | Figma? | Beschreibung | Verwendung |
 |-----------|------|--------|------------|-----------|
 | `--font-family-primary` | `'Segoe UI', Tahoma, Geneva, Verdana, sans-serif` | ⬜ | Haupt-Font | Alle Text-Elemente |
 | `--font-family-secondary` | `'Georgia', serif` | ⬜ | Sekundär-Font | Headlines (optional) |
-| `--font-size-h1` | `2.5rem` | ⬜ | H1 Größe | Seiten-Titel |
-| `--font-size-h2` | `2rem` | ⬜ | H2 Größe | Bereich-Titel |
-| `--font-size-h3` | `1.5rem` | ⬜ | H3 Größe | Unterbereich-Titel |
-| `--font-size-h4` | `1.25rem` | ⬜ | H4 Größe | Kleine Titel |
-| `--font-size-body` | `1rem` | ⬜ | Body Text | Standard Paragraph |
-| `--font-size-small` | `0.875rem` | ⬜ | Kleine Text | Labels, Hints |
-| `--font-size-tiny` | `0.75rem` | ⬜ | Kleinste Text | Footnotes |
+| `--font-size-h1` | `clamp(2rem, 5vw, 3rem)` | ✅ | H1 Größe - Fluid | Seiten-Titel |
+| `--font-size-h2` | `clamp(1.8em, 4vw, 2.5em)` | ✅ | H2 Größe - Fluid | Bereich-Titel |
+| `--font-size-h3` | `clamp(1.3em, 3vw, 2.1em)` | ✅ | H3 Größe - Fluid | Unterbereich-Titel |
+| `--font-size-h4` | `clamp(1em, 2.2vw, 1.7em)` | ✅ | H4 Größe - Fluid | Kleine Titel |
+| `--font-size-body` | `clamp(14px, 1.6vw, 16px)` | ✅ | Body Text - Fluid | Standard Paragraph |
+| `--font-size-small` | `clamp(11px, 1.3vw, 13px)` | ✅ | Kleine Text - Fluid | Labels, Hints |
+| `--font-size-tiny` | `clamp(10px, 1.1vw, 12px)` | ✅ | Kleinste Text - Fluid | Footnotes |
 | `--font-weight-light` | `300` | ⬜ | Dünne Schrift | - |
 | `--font-weight-regular` | `400` | ⬜ | Normal Schrift | Standard |
 | `--font-weight-medium` | `500` | ⬜ | Mittlere Schrift | - |
@@ -48,17 +53,23 @@ Alle Design-Eigenschaften werden hier zentral dokumentiert und in CSS-Variablen 
 
 ---
 
-## 📏 Abstands-Tokens (Spacing)
+## 📏 Abstands-Tokens (Spacing) - Fluid Properties
+
+**Neue Fluid Spacings von Figma Design (2026-03-03)**
+- Breakpoints: Mobile 280-768px, Tablet 768-1024px, Desktop 1024-1920px
+- Desktop-Werte: 8px, 10px, 16px, 20px, 28px, 40px, 64px, 130px, 150px
 
 | Token Name | Wert | Figma? | Beschreibung | Verwendung |
 |-----------|------|--------|------------|-----------|
-| `--space-xs` | `0.25rem` | ⬜ | 4px | Sehr kleine Abstände |
-| `--space-sm` | `0.5rem` | ⬜ | 8px | Kleine Abstände |
-| `--space-md` | `1rem` | ⬜ | 16px | Standard Abstand |
-| `--space-lg` | `1.5rem` | ⬜ | 24px | Große Abstände |
-| `--space-xl` | `2rem` | ⬜ | 32px | Sehr große Abstände |
-| `--space-xxl` | `3rem` | ⬜ | 48px | Größter Abstand |
-| `--space-xxxl` | `4rem` | ⬜ | 64px | Riesiger Abstand |
+| `--space-xxs` | `clamp(6px, 1vw, 8px)` | ✅ | XXS (8px) - Fluid | Sehr kleine Abstände |
+| `--space-xs` | `clamp(8px, 1.2vw, 10px)` | ✅ | XS (10px) - Fluid | Kleine Abstände |
+| `--space-sm` | `clamp(12px, 2vw, 16px)` | ✅ | SM (16px) - Fluid | Standard Abstand |
+| `--space-md` | `clamp(16px, 2.4vw, 20px)` | ✅ | Normal (20px) - Fluid | Standard Abstand |
+| `--space-lg` | `clamp(22px, 3.2vw, 28px)` | ✅ | MD (28px) - Fluid | Große Abstände |
+| `--space-xl` | `clamp(32px, 4.8vw, 40px)` | ✅ | LG (40px) - Fluid | Sehr große Abstände |
+| `--space-xxl` | `clamp(52px, 7.2vw, 64px)` | ✅ | XL (64px) - Fluid | Größter Abstand |
+| `--space-xxxl` | `clamp(104px, 14.8vw, 130px)` | ✅ | 2XL (130px) - Fluid | Sehr großer Abstand |
+| `--space-4xl` | `clamp(120px, 17vw, 150px)` | ✅ | 3XL (150px) - Fluid | Riesiger Abstand |
 
 ---
 
@@ -141,9 +152,10 @@ Alle Design-Eigenschaften werden hier zentral dokumentiert und in CSS-Variablen 
 
 ## 🔗 Verknüpfung mit Figma
 
-- **Figma Link:** [Hier Figma Design Link einfügen]
-- **Letztes Update:** 2026-02-24
-- **Aktualisiert durch:** [Name]
+- **Figma Link:** https://www.figma.com/design/Pu1e7x64fT48lwuznnO55D/Weber-Verpackungen-_-Screendesign
+- **Letztes Update:** 2026-03-03
+- **Aktualisiert durch:** Claude Code
+- **Update:** Fluid Properties für Spacings & Typography von Figma Design implementiert
 
 ---
 
